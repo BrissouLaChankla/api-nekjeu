@@ -51,8 +51,8 @@ class SongController extends Controller
 
 
 
-    public function getSongs() {
-        $songs = Song::with("album")->inRandomOrder()->get();
+    public function getSongs($nb) {
+        $songs = Song::with("album")->inRandomOrder()->take($nb)->get();
         return response()->json($songs);
     }   
 
