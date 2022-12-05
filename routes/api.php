@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SongController;
+use App\Http\Controllers\ScoreController;
 
 
 /*
@@ -23,5 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::controller(SongController::class)->prefix('get')->group(function () {
     Route::get('{nb}/songs', 'getSongs');
-    // Route::get('/dailyword', 'getDailyWord');
 });
+
+Route::apiResource("scores", ScoreController::class);
