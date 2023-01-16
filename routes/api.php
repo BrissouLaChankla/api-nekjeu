@@ -27,3 +27,9 @@ Route::controller(SongController::class)->prefix('get')->group(function () {
 });
 
 Route::apiResource("scores", ScoreController::class);
+
+Route::controller(ScoreController::class)->prefix('get')->group(function () {
+    Route::get('/scores/{nb}', 'getBestScores');
+    Route::get('/top-bot-player', 'getTopBotPlayer');
+    Route::get('/top-vs-player', 'getTopVsPlayer');
+});

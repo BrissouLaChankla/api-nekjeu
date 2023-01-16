@@ -12,6 +12,7 @@ class Score extends Model
     protected $fillable = [
         'username',
         'avatar',
+        'nb_of_musics',
         'score',
         'gametype_id'
     ];

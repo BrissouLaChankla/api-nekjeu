@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string("username");
             $table->text("avatar");
             $table->integer("score");
+            $table->integer("nb_of_musics");
 
-            $table->bigInteger('gametype_id')->unsigned()->nullable()->default(0);
+            $table->bigInteger('gametype_id')->unsigned()->nullable()->default(1);
             $table->foreign('gametype_id')->references('id')->on('gametypes');
 
             $table->timestamps();

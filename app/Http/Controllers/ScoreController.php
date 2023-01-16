@@ -14,7 +14,22 @@ class ScoreController extends Controller
      */
     public function index()
     {
-        //
+       $scores = Score::all();
+       return response()->json($scores);
+    }
+
+    public function getBestScores($nbOfMusics) {
+        $scores = Score::orderBy('score')->take($nbOfMusics)->select(['id', 'username', 'score','gametype_id', 'nb_of_musics', 'created_at'])->with('gametype')->get();
+        return response()->json($scores);
+    }
+
+    public function getTopBotPlayer() {
+        $topBot = Score::where('gametype_id', '=', '2')->orderBy('score')->first();
+        return response()->json($topBot);
+    }
+    public function getTopVsPlayer() {
+        $topVs = Score::where('gametype_id', '=', '1')->orderBy('score')->first();
+        return response()->json($topVs);
     }
 
     /**
@@ -24,7 +39,7 @@ class ScoreController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -36,23 +51,27 @@ class ScoreController extends Controller
     public function store(Request $request)
     {
         // La validation de données
-        $this->validate($request, [
-            'name' => 'required',
-            'avatar' => 'required',
-            'score' => 'required',
-            'gametype_id' => 'required'
-        ]);
+        // $this->validate($request, [
+        //     'name' => 'required',
+        //     'avatar' => 'required',
+        //     'score' => 'required',
+        //     'gametype_id' => 'required'
+        // ]);
 
         // On crée un nouvel utilisateur
+        if($request->username === "Moi") {
+            $request->merge(["username" => "Anonyme"]);
+        }
+
         $score = Score::create([
-            'name' => $request->username,
+            'username' => $request->username,
             'avatar' => $request->avatar,
+            'nb_of_musics' => $request->nb_of_musics,
             'score' => $request->score,
             'gametype_id' => $request->typeGameId
         ]);
-
-        return "gg";
-
+        
+        return response()->json($score);
     }
 
     /**
